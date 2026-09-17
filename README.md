@@ -1,6 +1,12 @@
+<div align="center">
+
+<img src="docs/web-pilot.png" alt="WebPilot logo" width="360" />
+
 # 🌐 WebPilot
 
 **A local-first, privacy-respecting AI browser agent — free and open source.**
+
+</div>
 
 WebPilot turns natural-language tasks into safe, structured browser actions. Ask it to *"download 20 sunset wallpapers"* or *"extract all product prices from https://example.com"*, and it plans, browses, extracts and downloads — entirely on your machine, with **no cloud calls, no telemetry, no data ever leaving your device**.
 
