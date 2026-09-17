@@ -1,0 +1,19 @@
+{
+  "name": "@webpilot/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-cutting utilities: config, structured logging, typed errors, ids, url/mime/hash helpers.",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@webpilot/schemas": "workspace:*"
+  }
+}

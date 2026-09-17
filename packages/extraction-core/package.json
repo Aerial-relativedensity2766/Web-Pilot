@@ -1,0 +1,21 @@
+{
+  "name": "@webpilot/extraction-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic DOM extraction: text, links, images, buttons, inputs, metadata and structured data.",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@webpilot/schemas": "workspace:*",
+    "@webpilot/shared": "workspace:*",
+    "playwright": "^1.63.0"
+  }
+}

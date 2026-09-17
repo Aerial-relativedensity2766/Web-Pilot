@@ -1,0 +1,29 @@
+{
+  "name": "@webpilot/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Elysia API server: tasks, downloads, settings, models, SQLite persistence and live WebSocket agent events.",
+  "main": "./src/server.ts",
+  "module": "./src/server.ts",
+  "scripts": {
+    "dev": "bun --watch src/server.ts",
+    "start": "bun src/server.ts",
+    "typecheck": "echo '@webpilot/api: no sources yet \u2014 typecheck skipped'",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@webpilot/agent-core": "workspace:*",
+    "@webpilot/ai-core": "workspace:*",
+    "@webpilot/browser-core": "workspace:*",
+    "@webpilot/download-core": "workspace:*",
+    "@webpilot/extraction-core": "workspace:*",
+    "@webpilot/schemas": "workspace:*",
+    "@webpilot/shared": "workspace:*",
+    "drizzle-orm": "^0.45.2",
+    "elysia": "^1.4.30"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10"
+  }
+}

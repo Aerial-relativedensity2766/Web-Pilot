@@ -1,0 +1,13 @@
+{
+  "name": "@webpilot/test-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic local fixture website used by integration and end-to-end tests.",
+  "scripts": {
+    "dev": "bun --watch src/server.ts",
+    "start": "bun src/server.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {}
+}

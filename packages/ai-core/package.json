@@ -1,0 +1,21 @@
+{
+  "name": "@webpilot/ai-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local AI: Qwen2.5-0.5B task planning plus MiniLM embeddings and semantic ranking via Transformers.js.",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.0",
+    "@webpilot/schemas": "workspace:*",
+    "@webpilot/shared": "workspace:*"
+  }
+}

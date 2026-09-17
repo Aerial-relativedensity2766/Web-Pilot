@@ -1,0 +1,51 @@
+# dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# builds
+dist/
+build/
+.output/
+.vinxi/
+.turbo/
+*.tsbuildinfo
+
+# webpilot runtime data
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+downloads/
+screenshots/
+sessions/
+
+# tooling caches
+.cache/
+.vitest/
+test-results/
+playwright-report/
+blob-report/
+coverage/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# editors / os
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+.vscode/*
+!.vscode/extensions.json
+
+# logs
+*.log
+npm-debug.log*
+bun-debug.log*

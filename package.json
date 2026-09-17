@@ -1,0 +1,42 @@
+{
+  "name": "webpilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "WebPilot \u2014 local-first AI browser agent that turns natural-language tasks into safe, structured browser actions.",
+  "license": "MIT",
+  "packageManager": "bun@1.4.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "bun run test:unit && bun run test:integration",
+    "test:unit": "vitest run tests/unit --passWithNoTests",
+    "test:integration": "WEBPILOT_LOG_LEVEL=${WEBPILOT_LOG_LEVEL:-error} bun test tests/integration",
+    "test:e2e": "playwright test",
+    "test:all": "bun run test && bun run test:e2e",
+    "test-site": "bun run apps/test-site/src/server.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio",
+    "api": "bun run apps/api/src/server.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/bun": "^1.4.2",
+    "@types/node": "^22.20.3",
+    "@webpilot/agent-core": "workspace:*",
+    "@webpilot/ai-core": "workspace:*",
+    "@webpilot/browser-core": "workspace:*",
+    "@webpilot/download-core": "workspace:*",
+    "@webpilot/extraction-core": "workspace:*",
+    "@webpilot/schemas": "workspace:*",
+    "@webpilot/shared": "workspace:*",
+    "turbo": "^2.10.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  }
+}

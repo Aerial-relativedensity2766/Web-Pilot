@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "types": ["bun"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@webpilot/schemas": ["./packages/schemas/src/index.ts"],
+      "@webpilot/shared": ["./packages/shared/src/index.ts"],
+      "@webpilot/browser-core": ["./packages/browser-core/src/index.ts"],
+      "@webpilot/extraction-core": ["./packages/extraction-core/src/index.ts"],
+      "@webpilot/download-core": ["./packages/download-core/src/index.ts"],
+      "@webpilot/ai-core": ["./packages/ai-core/src/index.ts"],
+      "@webpilot/agent-core": ["./packages/agent-core/src/index.ts"]
+    }
+  },
+  "include": ["packages/*/src/**/*.ts", "apps/api/src/**/*.ts", "apps/test-site/src/**/*.ts", "tests/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "apps/web",
+    "data",
+    "models",
+    "**/.output",
+    "**/.vinxi",
+    "**/dist"
+  ]
+}
