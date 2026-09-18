@@ -28,39 +28,22 @@ A host process constructs [`AgentEngine`](../packages/agent-core/src/engine.ts) 
 ```mermaid
 flowchart TD
   runNode["AgentEngine.run"] --> launchNode["browserManager.launch"]
-  launchNode --> loopNode["agentLoop"]
-  loopNode --> observeNode["controller.observe then observePage"]
-  observeNode --> planNode["planFromStrategy"]
-  planNode --> aiDecision{"modelManager enabled?"}
-  aiDecision -->|"yes"| aiPlan["tryAiPlan"]
-  aiDecision -->|"no"| rules["planWithRules"]
-  aiPlan -->|"parsed steps"| stepNode["executeStep"]
-  aiPlan -->|"empty or error"| rules
-  rules --> stepNode
-  stepNode --> validateNode["validateAction"]
-  validateNode -->|"invalid"| rejected["emit ACTION_REJECTED"]
-  validateNode -->|"ok"| permDecision{"needsPermission?"}
-  permDecision -->|"yes"| askPerm["onPermissionRequest"]
-  permDecision -->|"no"| execNode["executeAction"]
-  askPerm -->|"granted"| execNode
-  askPerm -->|"denied"| denied["PERMISSION_DENIED"]
-  execNode --> kindSwitch{"action.type"}
-  kindSwitch -->|"navigate click type press scroll wait"| ctrlNode["BrowserController"]
-  kindSwitch -->|"extract"| extractNode["controller.extract then Extractor"]
-  kindSwitch -->|"download"| dlNode["downloader.downloadMany"]
-  extractNode --> rankNode["optional rankImages / rankLinks / rankTexts"]
-  ctrlNode --> doneNode["ACTION_COMPLETED"]
-  rankNode --> doneNode
-  dlNode --> doneNode
-  doneNode --> evalNode{"evaluateCompletion"}
-  evalNode -->|"yes"| completeNode["TASK_COMPLETED"]
-  evalNode -->|"no"| failDecision{"step threw?"}
-  failDecision -->|"yes"| replanNode["replanForFailure"]
-  failDecision -->|"no"| loopNode
-  replanNode -->|"alternative queued"| loopNode
-  replanNode -->|"abort"| failNode["TASK_FAILED"]
-  rejected --> loopNode
-  denied --> loopNode
+  launchNode --> observeNode["Observe: controller.observe"]
+  observeNode --> planNode["Plan: tryAiPlan then planWithRules"]
+  planNode --> validateNode["validateAction"]
+  validateNode -->|"invalid"| observeNode
+  validateNode -->|"ok"| permNode["Permission callback if flagged"]
+  permNode -->|"denied"| observeNode
+  permNode -->|"ok or not needed"| execNode["executeAction"]
+  execNode --> browserNode["BrowserController: navigate, type, ..."]
+  execNode --> extractNode["Extractor via controller.extract"]
+  execNode --> downloadNode["Downloader.downloadMany"]
+  extractNode --> rankNode["Optional ai-core ranking"]
+  browserNode --> evalNode["evaluateCompletion / replanForFailure"]
+  rankNode --> evalNode
+  downloadNode --> evalNode
+  evalNode -->|"continue"| observeNode
+  evalNode -->|"complete or abort"| closeNode["browserManager.close"]
 ```
 
 Checked against current source:
@@ -76,20 +59,19 @@ Completion today is narrow: a `download` step can finish the task when enough fi
 
 ## Package imports (not the product diagram)
 
-Arrows are **real TypeScript imports**. Dashed arrows are declared workspace dependencies with **no application source** yet.
+Solid arrows are **real TypeScript imports**. Dashed arrows are workspace `package.json` dependencies with **no application source** yet (`apps/api`, `apps/web`). `apps/test-site` is a fixture server with no package imports.
 
 ```mermaid
 flowchart TB
-  schemas["schemas — Zod contracts only"]
-  shared["shared — config, EventBus, helpers"]
-  aiCore["ai-core — rule/LLM plan, ranking"]
-  extraction["extraction-core — DOM extract"]
-  download["download-core — fetch, hash, manifest"]
-  browser["browser-core — Playwright"]
-  agent["agent-core — AgentEngine"]
-  fixtures["apps/test-site — test fixture"]
-  apiApp["apps/api — scaffold, no src"]
-  webApp["apps/web — scaffold, no src"]
+  schemas["schemas: Zod contracts only"]
+  shared["shared: config, EventBus, helpers"]
+  aiCore["ai-core: rule/LLM plan, ranking"]
+  extraction["extraction-core: DOM extract"]
+  download["download-core: fetch, hash, manifest"]
+  browser["browser-core: Playwright"]
+  agent["agent-core: AgentEngine"]
+  apiApp["apps/api: scaffold, no src"]
+  webApp["apps/web: scaffold, no src"]
 
   shared --> schemas
   aiCore --> schemas
@@ -107,7 +89,6 @@ flowchart TB
   agent --> aiCore
   agent --> browser
   agent --> download
-  fixtures -.-> schemas
   apiApp -.-> agent
   apiApp -.-> shared
   webApp -.-> schemas
