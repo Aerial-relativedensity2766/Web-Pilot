@@ -3,22 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "SolidStart dashboard: task input, agent timeline, browser status, downloads, settings and model status.",
+  "description": "SolidStart dashboard shell: introduction plus labeled future task, timeline, and download areas.",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "dev": "vinxi dev --port 3000",
-    "build": "vinxi build",
-    "start": "vinxi start",
-    "typecheck": "echo '@webpilot/web: no sources yet \u2014 typecheck skipped'"
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "preview": "vite preview --port 3000",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@solidjs/router": "^1.0.0",
     "@solidjs/start": "^2.0.5",
     "@webpilot/schemas": "workspace:*",
+    "nitro": "^3.0.260610-beta",
     "solid-js": "^1.9.15"
   },
   "devDependencies": {
     "unocss": "^66.10.5",
-    "vinxi": "^0.5.11",
     "vite": "^8.3.0"
   }
 }

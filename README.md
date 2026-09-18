@@ -10,7 +10,7 @@
 
 WebPilot turns natural-language tasks into safe, structured browser actions. Ask it to *"download 20 sunset wallpapers"* or *"extract all product prices from https://example.com"*, and it plans, browses, extracts and downloads — entirely on your machine, with **no cloud calls, no telemetry, no data ever leaving your device**.
 
-> **Status:** early development (v0.1.0). The core engine, planners, browser automation, extraction and download pipeline are working; the API server and web dashboard are scaffolds. Contributions are very welcome!
+> **Status:** early development (v0.1.0). The core engine, planners, browser automation, extraction and download pipeline are working. The web app has a static accessible dashboard shell; the API server is still a scaffold. Contributions are very welcome!
 
 ---
 
@@ -46,7 +46,7 @@ Long term, WebPilot aims to be a **self-hosted personal web assistant**: a dashb
 ```
 apps/
   api/          Elysia API server: tasks, downloads, settings, models, SQLite + WebSockets (scaffold)
-  web/          SolidStart dashboard: task input, live agent timeline, downloads (scaffold)
+  web/          SolidStart dashboard shell (static preview; live tasks not connected)
   test-site/    Local fixture site for integration/e2e tests
 packages/
   shared/         Config, resource limits, logging, cancellation, event bus, utilities
@@ -121,6 +121,7 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 - [x] Browser automation, extraction and safe download pipeline
 - [x] Hybrid lexical/semantic candidate ranking
 - [ ] Elysia API server with SQLite persistence and live WebSocket events
+- [x] SolidStart dashboard shell (accessible preview; no live tasks)
 - [ ] SolidStart dashboard (task input, agent timeline, download library, model status)
 - [ ] Session recording and replay
 - [ ] Plugin API for custom actions and extractors
@@ -128,7 +129,7 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 
 ## 🤝 Contributing
 
-Contributions are welcome and encouraged — bug fixes, new actions/extractors, planner improvements, docs, tests, UI.
+Contributions are welcome and encouraged — bug fixes, new actions/extractors, planner improvements, docs, tests, UI. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 1. Fork the repository and create your branch from `main`.
 2. Make your changes; keep them typed (`bun run typecheck` must pass).
