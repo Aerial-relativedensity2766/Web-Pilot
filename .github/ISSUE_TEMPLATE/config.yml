@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security report
+    url: https://github.com/missarii/Web-Pilot/security
+    about: Report sandbox/limit escapes or other security issues privately (not in a public issue).
