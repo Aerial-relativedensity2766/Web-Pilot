@@ -17,7 +17,13 @@ export interface ExtractionIntent {
 /** Deterministic intent parser — always available, no weights needed. */
 export function planWithRules(input: PlannerInput): TaskPlan {
   const prompt = input.prompt.trim();
-  const startUrl = normalizeStartUrl(input.startUrl);
+  // Precedence: an explicit start URL → the URL the user typed in the prompt →
+  // the local fixture site (the offline default). Without the middle case,
+  // "download 3 images from https://example.com" would silently browse the
+  // fixture site instead of the site the user asked for.
+  const explicitStart =
+    input.startUrl && /^https?:\/\//i.test(input.startUrl.trim()) ? input.startUrl.trim() : null;
+  const startUrl = explicitStart ?? extractUrl(prompt) ?? normalizeStartUrl(undefined);
   const media = parseMediaIntent(prompt);
   if (media) return mediaPlan(prompt, startUrl, media);
   const extraction = parseExtractionIntent(prompt);

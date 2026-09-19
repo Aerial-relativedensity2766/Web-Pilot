@@ -23,8 +23,15 @@ export class ModelManager {
       quantization?: string;
       maxNewTokens?: number;
       enabled?: boolean;
+      /** Override `config.ai.allowModelDownload` (tests). */
+      allowModelDownload?: boolean;
     } = {},
   ) {}
+
+  /** Weights are only fetched from the network when the user opts in. */
+  get allowModelDownload(): boolean {
+    return this.options.allowModelDownload ?? config.ai.allowModelDownload;
+  }
 
   get modelId(): string {
     return this.options.modelId ?? config.ai.modelId;
@@ -113,12 +120,20 @@ export class ModelManager {
         });
       const remote = async (): Promise<TextPipeline> =>
         factory('text-generation', this.modelId, { dtype: quantization, device: 'cpu' });
-      this.pipeline = await withTimeout(
-        localOnly().catch(() => remote()),
-        180_000,
-        `Model load timed out for ${this.modelId}`,
-        'AI_TIMEOUT',
-      );
+
+      if (this.allowModelDownload) {
+        this.pipeline = await withTimeout(
+          localOnly().catch(() => remote()),
+          180_000,
+          `Model load timed out for ${this.modelId}`,
+          'AI_TIMEOUT',
+        );
+      } else {
+        // Offline by default: only pre-downloaded weights are used. A missing
+        // model is an expected state, so this fails fast and the deterministic
+        // rule planner takes over instead of stalling on a network fetch.
+        this.pipeline = await localOnly();
+      }
       this.unavailableReason = null;
       log.info('model loaded', { model: this.modelId });
       return this.pipeline;

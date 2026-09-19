@@ -15,6 +15,7 @@
         "@webpilot/extraction-core": "workspace:*",
         "@webpilot/schemas": "workspace:*",
         "@webpilot/shared": "workspace:*",
+        "drizzle-kit": "^0.31.10",
         "turbo": "^2.10.13",
         "typescript": "^7.0.2",
         "vitest": "^5.0.1",

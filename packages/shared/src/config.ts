@@ -61,6 +61,14 @@ export interface WebPilotConfig {
     quantization: string;
     maxNewTokens: number;
     embeddingModelId: string;
+    /**
+     * Whether the agent may fetch model weights from the internet.
+     *
+     * `false` by default **on purpose**: WebPilot promises that nothing leaves
+     * the machine. With weights absent the local planner degrades to the rule
+     * planner immediately instead of contacting a model hub.
+     */
+    allowModelDownload: boolean;
   };
   safety: {
     downloadAllowlist: string[];
@@ -163,6 +171,7 @@ export function loadConfig(env: Env = process.env): WebPilotConfig {
       quantization: readString(env, 'WEBPILOT_AI_QUANTIZATION', 'q4'),
       maxNewTokens: readNumber(env, 'WEBPILOT_AI_MAX_NEW_TOKENS', 512, 32, 4_096),
       embeddingModelId: readString(env, 'WEBPILOT_EMBEDDING_MODEL_ID', 'Xenova/all-MiniLM-L6-v2'),
+      allowModelDownload: readBoolean(env, 'WEBPILOT_AI_ALLOW_MODEL_DOWNLOAD', false),
     },
     safety: {
       downloadAllowlist: readList(env, 'WEBPILOT_DOWNLOAD_ALLOWLIST'),

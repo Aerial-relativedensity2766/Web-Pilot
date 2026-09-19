@@ -1,5 +1,6 @@
 import { getConfig, loggerFor } from '@webpilot/shared';
-import { createApp } from './app';
+import { createApp, disposeApp } from './app';
+import { closeDb } from './db/client';
 
 const log = loggerFor('api');
 
@@ -29,9 +30,16 @@ export function startServer(options: ListenOptions = {}) {
   return app;
 }
 
+/**
+ * Stops the listener **and** the agent work behind it: a cancelled browser that
+ * keeps running after `Ctrl-C` is exactly the kind of surprise this project must
+ * not ship. The local SQLite handle is closed last.
+ */
 export async function stopServer(app: ReturnType<typeof startServer>, signal?: string): Promise<void> {
   log.info('stopping', signal ? { signal } : undefined);
+  await disposeApp(app);
   await app.stop();
+  closeDb();
 }
 
 if (import.meta.main) {

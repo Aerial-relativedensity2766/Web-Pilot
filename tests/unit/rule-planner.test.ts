@@ -352,25 +352,29 @@ describe('planWithRules — empty and ambiguous input', () => {
     expect(extract.success).toBe(false);
   });
 
-  it('media keyword beats “extract … from URL” and ignores the prompt URL', () => {
-    // Current routing: parseMediaIntent runs first. The example.com URL is not
-    // used as the navigate target; the plan types into the fixture search box.
+  it('media keyword beats “extract … from URL” and browses the prompt URL', () => {
+    // Current routing: parseMediaIntent runs first, so this stays a media plan.
+    // A URL typed in the prompt is now the navigate target (it used to be
+    // ignored in favour of the fixture site, which silently browsed the wrong
+    // page for every non-fixture task).
     // "extract" is not a cleanQuery stop word, so it becomes the typed query.
     const prompt = `extract images from ${EXAMPLE}`;
     const plan = planWithRules({ prompt });
     expectValidPlan(plan);
     expect(stepTypes(plan)).toEqual(['navigate', 'type', 'extract']);
-    expectNavigate(plan.steps[0], FIXTURE_HOME);
+    expectNavigate(plan.steps[0], EXAMPLE);
     expectTypeSearch(plan.steps[1], 'extract');
     expectExtract(plan.steps[2], 'images', 'extract image');
-    expect(plan.steps.some((step) => step.type === 'navigate' && step.url === EXAMPLE)).toBe(false);
+    expect(plan.steps.some((step) => step.type === 'navigate' && step.url === FIXTURE_HOME)).toBe(
+      false,
+    );
   });
 
   it('“get images from URL” is a media+download plan, not extraction', () => {
     const plan = planWithRules({ prompt: `get images from ${EXAMPLE}` });
     expectValidPlan(plan);
     expect(stepTypes(plan)).toEqual(['navigate', 'type', 'extract', 'download']);
-    expectNavigate(plan.steps[0], FIXTURE_HOME);
+    expectNavigate(plan.steps[0], EXAMPLE);
     expectDownload(plan.steps[3], 10, 'images image');
   });
 

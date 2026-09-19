@@ -121,6 +121,13 @@ export class AgentEngine {
   private signal: CancellationToken;
   private state: AgentState;
   private planQueue: Action[] = [];
+  /**
+   * Steps of the current plan that have not run yet. Used by
+   * `evaluateCompletion` so an `extract` step cannot finish a task that still
+   * has a `download` step planned (the bug behind "download 3 images" that
+   * extracted and exited without saving anything).
+   */
+  private pendingSteps: Action[] = [];
   private planSource: 'rule' | 'ai' | 'replan' = 'rule';
   private sequence = 0;
   private readonly maxSteps: number;
@@ -148,6 +155,8 @@ export class AgentEngine {
     this.signal = signal ?? new CancellationToken();
     this.startedAt = Date.now();
     this.log = loggerFor(`agent:engine:${taskId}`);
+    this.planQueue = [];
+    this.pendingSteps = [];
 
     const aiAvailable = !!this.options.modelManager?.enabled;
 
@@ -260,9 +269,13 @@ export class AgentEngine {
       });
 
       // --- execute each step --------------------------------------------------
-      for (const action of plan.steps) {
+      for (let index = 0; index < plan.steps.length; index += 1) {
+        const action = plan.steps[index]!;
         if (!this.isRunning()) break;
         this.signal.throwIfCancelled();
+
+        // What is still ahead of us shapes whether this step *completes* the task.
+        this.pendingSteps = plan.steps.slice(index + 1);
 
         completed = await this.executeStep(action);
         if (completed) {
@@ -782,7 +795,9 @@ export class AgentEngine {
     }
 
     if (action.type === 'extract') {
-      return this.state.candidates.length > 0;
+      // Extraction only finishes the task when nothing else was planned. A plan
+      // that still has a `download` (or any other) step ahead must keep going.
+      return this.state.candidates.length > 0 && !this.pendingSteps.some((step) => step.type !== 'wait');
     }
 
     return false;

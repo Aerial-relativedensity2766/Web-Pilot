@@ -10,9 +10,9 @@ export default createHandler(() => (
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta
             name="description"
-            content="WebPilot local dashboard shell. Live task execution is not connected yet."
+            content="WebPilot local dashboard: turn natural-language tasks into safe, local browser actions and downloads."
           />
-          <title>WebPilot dashboard (preview)</title>
+          <title>WebPilot dashboard</title>
           {assets}
         </head>
         <body>

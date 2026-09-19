@@ -22,8 +22,15 @@ export class EmbeddingManager {
       modelsDir?: string;
       modelId?: string;
       enabled?: boolean;
+      /** Override `config.ai.allowModelDownload` (tests). */
+      allowModelDownload?: boolean;
     } = {},
   ) {}
+
+  /** Weights are only fetched from the network when the user opts in. */
+  get allowModelDownload(): boolean {
+    return this.options.allowModelDownload ?? config.ai.allowModelDownload;
+  }
 
   get modelId(): string {
     return this.options.modelId ?? config.ai.embeddingModelId;
@@ -105,18 +112,26 @@ export class EmbeddingManager {
         if (typeof env.localModelPath !== 'undefined') env.localModelPath = modelsDir;
       }
       const args = { pooling: 'mean', normalize: true };
-      const local = await factory('feature-extraction', this.modelId, {
-        ...args,
-        local_files_only: true,
-      }).catch(() => null);
-      this.pipeline =
-        local ??
-        ((await withTimeout(
-          factory('feature-extraction', this.modelId, args),
-          180_000,
-          `Embedding load timed out for ${this.modelId}`,
-          'AI_TIMEOUT',
-        )) as EmbeddingPipeline);
+      if (this.allowModelDownload) {
+        const local = await factory('feature-extraction', this.modelId, {
+          ...args,
+          local_files_only: true,
+        }).catch(() => null);
+        this.pipeline =
+          local ??
+          ((await withTimeout(
+            factory('feature-extraction', this.modelId, args),
+            180_000,
+            `Embedding load timed out for ${this.modelId}`,
+            'AI_TIMEOUT',
+          )) as EmbeddingPipeline);
+      } else {
+        // Offline by default; ranking then falls back to lexical scores only.
+        this.pipeline = (await factory('feature-extraction', this.modelId, {
+          ...args,
+          local_files_only: true,
+        })) as EmbeddingPipeline;
+      }
       this.unavailableReason = null;
       log.info('embedding model loaded', { model: this.modelId });
       return this.pipeline;

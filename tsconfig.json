@@ -29,7 +29,7 @@
       "@webpilot/agent-core": ["./packages/agent-core/src/index.ts"]
     }
   },
-  "include": ["packages/*/src/**/*.ts", "apps/api/src/**/*.ts", "apps/test-site/src/**/*.ts", "tests/**/*.ts"],
+  "include": ["packages/*/src/**/*.ts", "apps/api/src/**/*.ts", "apps/test-site/src/**/*.ts", "tests/**/*.ts", "drizzle.config.ts"],
   "exclude": [
     "node_modules",
     "apps/web",

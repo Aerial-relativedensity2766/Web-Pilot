@@ -22,7 +22,7 @@ export function SiteChrome(props: ParentProps) {
           />
           <span class="brand-text">
             <span class="brand-name">WebPilot</span>
-            <span class="preview-badge">Dashboard preview</span>
+            <span class="preview-badge">Local dashboard</span>
           </span>
         </a>
         <nav class="site-nav" aria-label="Dashboard sections">
@@ -40,8 +40,9 @@ export function SiteChrome(props: ParentProps) {
       {props.children}
       <footer class="site-footer">
         <p>
-          Local-first preview. No analytics, hosted fonts, or cloud APIs. Live
-          agent controls are out of scope for this shell.
+          Runs entirely on this machine: no analytics, hosted fonts, or cloud
+          APIs. Files are saved under <code>data/downloads/</code> and never
+          uploaded.
         </p>
       </footer>
     </>
