@@ -1,6 +1,6 @@
 # Contributing to WebPilot
 
-Thanks for helping. WebPilot is a **local-first** AI browser agent (Bun workspaces + Turborepo). Core packages and fixtures are usable today; **`apps/api` and `apps/web` are scaffolds** without full application source yet.
+Thanks for helping. WebPilot is a **local-first** AI browser agent (Bun workspaces + Turborepo). Core packages and fixtures are usable today. **`apps/web` has a static accessible dashboard shell** (no live tasks). **`apps/api` is still a scaffold.**
 
 ## Prerequisites
 
@@ -36,12 +36,13 @@ bun run test-site   # http://127.0.0.1:3001/test-site/
 | `bun run test:integration` | Bun tests under `tests/integration` |
 | `bun run test:e2e` | Playwright e2e (install browsers first) |
 | `bun run build` | Turbo build |
+| `bun run --filter @webpilot/web dev` | Dashboard shell at http://127.0.0.1:3000 (Node 24+; see `apps/web/README.md`) |
 
 ### Commands / areas that are not ready
 
 | Area | Why |
 | --- | --- |
-| Full dashboard / polished API product path | `apps/api` and `apps/web` are scaffolds — `bun run dev` / `bun run api` may not behave like a finished app |
+| Live dashboard tasks / polished API product path | `apps/web` is a static preview shell; `apps/api` is still a scaffold — nothing here executes an agent |
 | “All green” from unit tests alone | Prefer the suites that match your change; say N/A in the PR when a suite does not apply |
 
 ## Pull request workflow
@@ -68,5 +69,5 @@ bun run test-site   # http://127.0.0.1:3001/test-site/
 Please link this file from the README Contributing section:
 
 ```md
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for a quickstart that works **before** the API/dashboard scaffolds are finished.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for a quickstart. The dashboard is a static preview shell; the API is still a scaffold.
 ```

@@ -8,6 +8,8 @@ dist/
 build/
 .output/
 .vinxi/
+.nitro/
+.solid/
 .turbo/
 *.tsbuildinfo
 
