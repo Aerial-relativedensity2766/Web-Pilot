@@ -114,6 +114,8 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 - `tests/integration` — real browser + local test site (bun test)
 - `tests/e2e` — Playwright
 
+GitHub Actions on pull requests and pushes to `main` runs `bun run typecheck` and `bun run test:unit` only. That is **not** complete coverage: `apps/api` and `apps/web` currently skip typecheck while those scaffolds have no sources, and `test:unit` allows an empty suite (`--passWithNoTests`). Integration and e2e tests are not part of this first workflow.
+
 ## 🗺️ Roadmap
 
 - [x] Agent engine loop with validation, permissions and replanning

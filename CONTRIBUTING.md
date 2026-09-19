@@ -45,6 +45,16 @@ bun run test-site   # http://127.0.0.1:3001/test-site/
 | Live dashboard tasks / polished API product path | `apps/web` is a static preview shell; `apps/api` is still a scaffold — nothing here executes an agent |
 | “All green” from unit tests alone | Prefer the suites that match your change; say N/A in the PR when a suite does not apply |
 
+## Continuous integration
+
+Pull requests and pushes to `main` run [`.github/workflows/ci.yml`](./.github/workflows/ci.yml): `bun install --frozen-lockfile`, then `bun run typecheck` and `bun run test:unit`.
+
+That workflow is **not** full coverage:
+
+- `apps/api` and `apps/web` typecheck scripts currently skip missing sources (scaffolds).
+- `test:unit` uses `--passWithNoTests`, so an empty unit suite is not coverage.
+- Integration, e2e, Playwright browsers, and model downloads are deliberately out of scope.
+
 ## Pull request workflow
 
 1. Fork and branch from `main` (`docs/…`, `fix/…`, or `feat/…`).
