@@ -10,7 +10,7 @@
 
 WebPilot turns natural-language tasks into safe, structured browser actions. Ask it to *"download 20 sunset wallpapers"* or *"extract all product prices from https://example.com"*, and it plans, browses, extracts and downloads — entirely on your machine, with **no cloud calls, no telemetry, no data ever leaving your device**.
 
-> **Status:** early development (v0.1.0). The core engine, planners, browser automation, extraction and download pipeline are working; the API server and web dashboard are scaffolds. Contributions are very welcome!
+> **Status:** early development (v0.1.0). The core engine, planners, browser automation, extraction and download pipeline are working. The web app has a static accessible dashboard shell; the API server is still a scaffold. Contributions are very welcome!
 
 ---
 
@@ -46,7 +46,7 @@ Long term, WebPilot aims to be a **self-hosted personal web assistant**: a dashb
 ```
 apps/
   api/          Elysia API server: tasks, downloads, settings, models, SQLite + WebSockets (scaffold)
-  web/          SolidStart dashboard: task input, live agent timeline, downloads (scaffold)
+  web/          SolidStart dashboard shell (static preview; live tasks not connected)
   test-site/    Local fixture site for integration/e2e tests
 packages/
   shared/         Config, resource limits, logging, cancellation, event bus, utilities
@@ -102,17 +102,21 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 
 ## 🏗️ Architecture
 
+Beginner-friendly package map, Mermaid diagrams, and a skill-to-package guide: **[docs/architecture.md](./docs/architecture.md)**.
+
 - **Agent loop** (`agent-core`): every step runs *plan → validate → permission → execute → observe → evaluate*. Failures are recorded with typed error codes and passed through a replanner with bounded recovery before aborting.
 - **Always-a-plan guarantee** (`ai-core`): the local LLM planner is tried first; any failure falls back to the deterministic rule planner.
 - **Permission gate**: permission-sensitive actions emit `PERMISSION_REQUESTED` and pause until the host app (or user) decides; decisions can be cached with "remember".
 - **Hard limits**: step counts, download counts, file sizes and task durations are capped centrally.
-- **Events**: a typed event bus emits structured events (`AI_THINKING`, `ACTION_PLANNED`, `ACTION_COMPLETED`, `ACTION_FAILED`, `PERMISSION_*`, …) consumed by the API/WebSocket layer.
+- **Events**: a typed in-process event bus emits structured events (`AI_THINKING`, `ACTION_PLANNED`, `ACTION_COMPLETED`, `ACTION_FAILED`, `PERMISSION_*`, …). SQLite persistence and WebSocket streaming are planned with the API scaffold; they are not wired yet.
 
 ## Testing
 
 - `tests/unit` — pure-logic tests (vitest)
 - `tests/integration` — real browser + local test site (bun test)
 - `tests/e2e` — Playwright
+
+GitHub Actions on pull requests and pushes to `main` runs `bun run typecheck` and `bun run test:unit` only. That is **not** complete coverage: `apps/api` and `apps/web` currently skip typecheck while those scaffolds have no sources, and `test:unit` allows an empty suite (`--passWithNoTests`). Integration and e2e tests are not part of this first workflow.
 
 ## 🗺️ Roadmap
 
@@ -121,6 +125,7 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 - [x] Browser automation, extraction and safe download pipeline
 - [x] Hybrid lexical/semantic candidate ranking
 - [ ] Elysia API server with SQLite persistence and live WebSocket events
+- [x] SolidStart dashboard shell (accessible preview; no live tasks)
 - [ ] SolidStart dashboard (task input, agent timeline, download library, model status)
 - [ ] Session recording and replay
 - [ ] Plugin API for custom actions and extractors
@@ -128,7 +133,7 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 
 ## 🤝 Contributing
 
-Contributions are welcome and encouraged — bug fixes, new actions/extractors, planner improvements, docs, tests, UI.
+Contributions are welcome and encouraged — bug fixes, new actions/extractors, planner improvements, docs, tests, UI. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 1. Fork the repository and create your branch from `main`.
 2. Make your changes; keep them typed (`bun run typecheck` must pass).
