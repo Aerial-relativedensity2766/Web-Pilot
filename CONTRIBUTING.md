@@ -68,6 +68,7 @@ That workflow is **not** full coverage:
 - Do not commit secrets, real `.env` values, session stores, or personal browsing data.
 - Sanitize logs. Do not upload private downloads from agent runs.
 - Security issues: use GitHub **Security** advisories, not public issues.
+- Read the [safety model](./docs/safety.md) and [architecture guide](./docs/architecture.md) before changing agent behavior or security boundaries.
 
 ## Related
 
