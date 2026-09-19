@@ -102,11 +102,13 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 
 ## 🏗️ Architecture
 
+Beginner-friendly package map, Mermaid diagrams, and a skill-to-package guide: **[docs/architecture.md](./docs/architecture.md)**.
+
 - **Agent loop** (`agent-core`): every step runs *plan → validate → permission → execute → observe → evaluate*. Failures are recorded with typed error codes and passed through a replanner with bounded recovery before aborting.
 - **Always-a-plan guarantee** (`ai-core`): the local LLM planner is tried first; any failure falls back to the deterministic rule planner.
 - **Permission gate**: permission-sensitive actions emit `PERMISSION_REQUESTED` and pause until the host app (or user) decides; decisions can be cached with "remember".
 - **Hard limits**: step counts, download counts, file sizes and task durations are capped centrally.
-- **Events**: a typed event bus emits structured events (`AI_THINKING`, `ACTION_PLANNED`, `ACTION_COMPLETED`, `ACTION_FAILED`, `PERMISSION_*`, …) consumed by the API/WebSocket layer.
+- **Events**: a typed in-process event bus emits structured events (`AI_THINKING`, `ACTION_PLANNED`, `ACTION_COMPLETED`, `ACTION_FAILED`, `PERMISSION_*`, …). SQLite persistence and WebSocket streaming are planned with the API scaffold; they are not wired yet.
 
 ## Testing
 
