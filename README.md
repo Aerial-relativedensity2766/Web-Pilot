@@ -102,7 +102,7 @@ Everything is configured via environment variables (see [`.env.example`](./.env.
 
 ## 🏗️ Architecture
 
-Beginner-friendly package map, Mermaid diagrams, and a skill-to-package guide: **[docs/architecture.md](./docs/architecture.md)**.
+Beginner-friendly package map, Mermaid diagrams, and a skill-to-package guide: **[docs/architecture.md](./docs/architecture.md)**. See the [safety model](./docs/safety.md) for action limits, permissions, download checks, and known security gaps.
 
 - **Agent loop** (`agent-core`): every step runs *plan → validate → permission → execute → observe → evaluate*. Failures are recorded with typed error codes and passed through a replanner with bounded recovery before aborting.
 - **Always-a-plan guarantee** (`ai-core`): the local LLM planner is tried first; any failure falls back to the deterministic rule planner.
@@ -148,7 +148,7 @@ Open a [GitHub issue](https://github.com/missarii/Web-Pilot/issues) with your OS
 
 ## 🔒 Security
 
-Found a security-relevant bug (e.g. a way to escape the sandbox or limits)? Please open a private security advisory via the GitHub **Security** tab rather than a public issue.
+Found a security-relevant bug (e.g. a way to bypass action validation or configured limits)? Please open a private security advisory via the GitHub **Security** tab rather than a public issue.
 
 ## 📜 License
 
